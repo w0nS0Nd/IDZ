@@ -50,8 +50,3 @@ npx playwright show-report
 npm run build
 npm start
 ```
-
-## Поширені помилки
-- Якщо бачив помилку про `verbatimModuleSyntax`, переконайся що у `tsconfig.json` **нема** цієї опції і `"module": "CommonJS"`.
-- Порт зайнятий? Зміни `PORT` у змінних середовища або в `src/server.ts`.
-```
