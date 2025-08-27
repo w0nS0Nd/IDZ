@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1756253232335" clover="3.2.0">
+  <project timestamp="1756253232335" name="All files">
+    <metrics statements="14" coveredstatements="12" conditionals="11" coveredconditionals="9" methods="5" coveredmethods="5" elements="30" coveredelements="26" complexity="0" loc="14" ncloc="14" packages="1" files="1" classes="1"/>
+    <file name="calc.ts" path="E:\ДЗ\Тестування, верифікація та валідація програмного з\ідз\calculator-app\src\calc.ts">
+      <metrics statements="14" coveredstatements="12" conditionals="11" coveredconditionals="9" methods="5" coveredmethods="5"/>
+      <line num="3" count="3" type="stmt"/>
+      <line num="4" count="2" type="stmt"/>
+      <line num="5" count="2" type="stmt"/>
+      <line num="6" count="2" type="stmt"/>
+      <line num="7" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="11" count="2" type="stmt"/>
+      <line num="12" count="6" type="cond" truecount="4" falsecount="0"/>
+      <line num="13" count="4" type="cond" truecount="3" falsecount="2"/>
+      <line num="14" count="2" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="16" count="0" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
