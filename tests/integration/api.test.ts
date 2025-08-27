@@ -38,7 +38,7 @@ describe('API /api/calc', () => {
   });
 
   it('invalid number', async () => {
-  const r = await request(app).get('/api/calc?a=x&op=%2B&b=3');
+  const r = await request(app).get('/api/calc?a=2&op=%2B&b=abc'); // замість числа - текст
   expect(r.status).toBe(400);
   expect(r.body.error).toBe('InvalidNumber');
 });

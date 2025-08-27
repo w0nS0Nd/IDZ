@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Калькулятор</title>
+    <style>
+      body { font-family: system-ui, Arial, sans-serif; display:flex; justify-content:center; padding:24px; background:#f6f7f9; }
+      .calc { width: 320px; border:1px solid #e5e7eb; border-radius:12px; padding:16px; box-shadow:0 2px 12px rgba(0,0,0,.08); background:white; }
+      .display { width:100%; font-size:28px; padding:12px; text-align:right; border:1px solid #d1d5db; border-radius:8px; margin-bottom:12px; }
+      .grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; }
+      button { padding:14px; font-size:18px; border-radius:8px; border:1px solid #d1d5db; cursor:pointer; background:#f9fafb; }
+      button.op { background:#f3f4f6; }
+      button.equals { background:#e0f2fe; }
+      #error { color:#b91c1c; min-height:1.2em; margin-top:8px; }
+    </style>
+  </head>
+  <body>
+    <div class="calc">
+      <input id="display" class="display" readonly />
+      <div class="grid">
+        <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button><button class="op" data-k="/">/</button>
+        <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button><button class="op" data-k="*">*</button>
+        <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button><button class="op" data-k="-">-</button>
+        <button data-k="0">0</button><button data-k=".">.</button><button id="clear">C</button><button class="op" data-k="+">+</button>
+        <button class="equals" id="equals">=</button>
+      </div>
+      <div id="error"></div>
+    </div>
+    <script>
+      const disp = document.getElementById('display');
+      const err = document.getElementById('error');
+      let expr = '';
+      let haveOp = false;
+
+      function setError(msg=''){ err.textContent = msg; }
+
+      document.querySelectorAll('button[data-k]').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          const k = b.getAttribute('data-k');
+          if(['+','-','*','/'].includes(k)){
+            if(!expr || haveOp) return;
+            expr += ` ${k} `;
+            haveOp = true;
+          } else {
+            expr += k;
+          }
+          disp.value = expr;
+          setError();
+        })
+      });
+
+      document.getElementById('clear').onclick = ()=>{
+        expr = ''; haveOp = false; disp.value=''; setError();
+      };
+
+      document.getElementById('equals').onclick = async ()=>{
+        try{
+          const [a, op, b] = expr.split(' ');
+          if(!a || !op || !b) return setError('Неповний вираз');
+          const url = `/api/calc?a=${encodeURIComponent(a)}&op=${encodeURIComponent(op)}&b=${encodeURIComponent(b)}`;
+          const r = await fetch(url);
+          const j = await r.json();
+          if(!j.ok) return setError('Помилка: '+j.error);
+          expr = String(j.result); haveOp = false; disp.value = expr;
+          setError();
+        }catch(e){ setError('Системна помилка'); }
+      };
+    </script>
+  </body>
+</html>
